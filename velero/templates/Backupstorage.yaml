@@ -1,0 +1,18 @@
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: {{ include "velero.backupStorageLocation.name" . }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade,post-rollback
+    "helm.sh/hook-delete-policy": before-hook-creation
+  labels:
+    {{- include "velero.labels" . | nindent 4 }}
+spec:
+  provider: velero.io/aws
+  objectStorage:
+    bucket: ch03-cmf-prd-c1
+    prefix: ch03-cmf-prd-bkups
+  config:
+    region: ap-south
+    s3Url: http://ch03-flashblade01.neustar.net
+    profile: flashblade-ch03

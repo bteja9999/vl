@@ -1,0 +1,37 @@
+image:
+  repository: harbor-dev.onedev.neustar.biz/onedev-common/velero
+  tag: latest
+
+## Default s3 bucket for storing all backup files created by the backup-restore-operator
+backupsEnabled: true
+configuration:
+  provider: aws
+  backupStorageLocation:
+    name: aws
+    provider: velero.io/aws
+    bucketName: ch03-cmf-prd
+    prefix: ch03-cmf-prd-bkups
+    config:
+      region: ap-south
+      endpoint: http://ch03-flashblade01.neustar.net
+      endpointCA: ""
+    insecureTLSSkipVerify: true
+
+s3:
+  enabled: true
+  ## credentialSecretName if set, should be the name of the Secret containing AWS credentials.
+  ## To use IAM Role, don't set this field
+  credentialSecretName: "velero-credentials"
+  credentialSecretNamespace: "cscp-test"
+  provider: aws
+  region: ap-south
+  bucketName: ch03-cmf-prd
+  prefix: ch03-cmf-prd-bkups
+  endpoint: "http://ch03-flashblade01.neustar.net "
+  endpointCA: ""
+  insecureTLSSkipVerify: false
+
+  kubectl:
+    image:
+      repository: harbor-dev.onedev.neustar.biz/onedev-common/kubectl
+    tag: latest
